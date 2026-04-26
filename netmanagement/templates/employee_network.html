@@ -40,46 +40,70 @@
             <article class="device-card">
                 <div class="device-header">
                     <div class="device-left">
-                        <i class="fa-solid {{ device.icon }} device-icon"></i>
+                        
+                        <!-- Icon based on device type -->
+                        <i class="fa-solid
+                            {% if device.device_type == 'router' %}
+                                fa-wifi
+                            {% elif device.device_type == 'switch' %}
+                                fa-server
+                            {% else %}
+                                fa-laptop
+                            {% endif %}
+                            device-icon"></i>
+
                         <div>
-                            <div class="device-type">{{ device.type }}</div>
+                            <!-- Device Type (human readable) -->
+                            <div class="device-type">{{ device.get_device_type_display }}</div>
                             <h2 class="device-name">{{ device.name }}</h2>
                         </div>
                     </div>
 
+                    <!-- Status dot -->
                     <div class="status-dot
-    {% if device.status_color == 'green' %}
-        online
-    {% elif device.status_color == 'yellow' %}
-        warning
-    {% else %}
-        offline
-    {% endif %}
-"></div>
+                        {% if device.status == 'online' %}
+                            online
+                        {% elif device.status == 'warning' %}
+                            warning
+                        {% else %}
+                            offline
+                        {% endif %}
+                    "></div>
                 </div>
 
                 <div class="device-details">
                     <div class="detail-row">
                         <span>Status:</span>
-                        <strong>{{ device.status }}</strong>
+                        <strong>{{ device.get_status_display }}</strong>
                     </div>
+
                     <div class="detail-row">
                         <span>IP Address:</span>
                         <strong>{{ device.ip_address }}</strong>
                     </div>
+
                     <div class="detail-row">
                         <span>SSH:</span>
-                        <strong>{{ device.ssh }}</strong>
+                        <strong>
+                            {% if device.ssh_enabled %}Enabled{% else %}Disabled{% endif %}
+                        </strong>
                     </div>
 
-                    {% if device.firewall %}
+                    <!-- Only show firewall for routers -->
+                    {% if device.device_type == 'router' %}
                     <div class="detail-row">
                         <span>Firewall:</span>
-                        <strong>{{ device.firewall }}</strong>
+                        <strong>
+                            {% if device.firewall_enabled %}Enabled{% else %}Disabled{% endif %}
+                        </strong>
                     </div>
                     {% endif %}
                 </div>
             </article>
+            {% empty %}
+                <div class="empty-state">
+                    <p>No devices found.</p>
+                </div>
             {% endfor %}
         </section>
     </main>
