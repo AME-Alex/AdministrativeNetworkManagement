@@ -5,11 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ device.name }}</title>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
+
+    <!-- NAVBAR -->
     <header class="topbar">
         <div class="brand">
+            <i class="fa-solid fa-network-wired"></i>
             <span>Network Management Dashboard</span>
         </div>
 
@@ -20,20 +29,66 @@
         </nav>
     </header>
 
-    <main class="page-container">
-        <h1 class="page-title">{{ device.name }}</h1>
+    <!-- MODAL -->
+    <div class="modal-overlay">
+        <div class="modal-card">
 
-        <div class="device-detail-card">
-            <form method="POST">
+            <!-- HEADER -->
+            <div class="modal-header">
+                <div class="modal-title">Edit Device</div>
+                <div class="modal-close" onclick="window.history.back()">✕</div>
+            </div>
+
+            <!-- FORM -->
+            <form method="POST" class="modal-form">
                 {% csrf_token %}
 
-                <div class="form-grid">
-                    {{ form.as_p }}
+                <!-- DEVICE NAME -->
+                <div>
+                    <label>Device Name</label>
+                    <input type="text" name="name" value="{{ device.name }}">
                 </div>
 
-                <button type="submit" class="btn-save">Save Changes</button>
+                <!-- STATUS -->
+                <div>
+                    <label>Status</label>
+                    <select name="status">
+                        <option value="online" {% if device.status == 'online' %}selected{% endif %}>Online</option>
+                        <option value="warning" {% if device.status == 'warning' %}selected{% endif %}>Warning</option>
+                        <option value="offline" {% if device.status == 'offline' %}selected{% endif %}>Offline</option>
+                    </select>
+                </div>
+
+                <!-- IP -->
+                <div>
+                    <label>IP Address</label>
+                    <input type="text" name="ip_address" value="{{ device.ip_address }}">
+                </div>
+
+                <!-- SSH -->
+                <div class="checkbox-row">
+                    <input type="checkbox" name="ssh_enabled" {% if device.ssh_enabled %}checked{% endif %}>
+                    <label>SSH Enabled</label>
+                </div>
+
+                <!-- FIREWALL -->
+                <div>
+                    <label>Firewall</label>
+                    <select name="firewall_enabled">
+                        <option value="True" {% if device.firewall_enabled %}selected{% endif %}>Enabled</option>
+                        <option value="False" {% if not device.firewall_enabled %}selected{% endif %}>Disabled</option>
+                    </select>
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="window.history.back()">Cancel</button>
+                    <button type="submit" class="btn-save">Save Changes</button>
+                </div>
+
             </form>
         </div>
-    </main>
+    </div>
+
 </body>
 </html>
