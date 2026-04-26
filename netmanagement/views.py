@@ -133,3 +133,30 @@ def employee_network(request):
         'devices': devices,
         'active_tab': active_tab_name,
     })
+
+def management_network(request):
+    active_tab = request.GET.get('tab', 'routers')
+
+    routers = []
+    switches = []
+    end_devices = []
+
+    if active_tab == 'switches':
+        devices = switches
+        total_label = f'Total Switches: {len(switches)}'
+        active_tab_name = 'switches'
+    elif active_tab == 'end-devices':
+        devices = end_devices
+        total_label = f'Total End Devices: {len(end_devices)}'
+        active_tab_name = 'end-devices'
+    else:
+        devices = routers
+        total_label = f'Total Routers: {len(routers)}'
+        active_tab_name = 'routers'
+
+    return render(request, 'management_network.html', {
+        'page_title': 'Management Network',
+        'devices': devices,
+        'total_label': total_label,
+        'active_tab': active_tab_name,
+    })

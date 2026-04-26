@@ -18,7 +18,7 @@
         <nav class="nav">
             <a class="active" href="{% url 'home' %}">Home</a>
             <a href="{% url 'employee_network' %}">Employee Network</a>
-            <a href="#">Management Network</a>
+            <a href="{% url 'management_network' %}">Management Network</a>
         </nav>
     </header>
 
@@ -39,7 +39,7 @@
                 </div>
             </a>
 
-            <a class="card" href="#">
+            <a class="card" href="{% url 'management_network' %}">
                 <div class="card-icon">
                     <i class="fa-solid fa-server"></i>
                 </div>

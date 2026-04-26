@@ -370,3 +370,13 @@ img {
         font-size: 15px;
     }
 }
+
+.empty-state {
+    margin-top: 40px;
+    padding: 40px;
+    border: 1px dashed var(--border);
+    border-radius: 14px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 18px;
+}

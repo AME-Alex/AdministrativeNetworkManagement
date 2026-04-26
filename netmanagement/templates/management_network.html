@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Network</title>
+    <title>Management Network</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -17,24 +17,30 @@
 
         <nav class="nav">
             <a href="{% url 'home' %}">Home</a>
-            <a class="active" href="{% url 'employee_network' %}">Employee Network</a>
-            <a href="{% url 'management_network' %}">Management Network</a>
+            <a href="{% url 'employee_network' %}">Employee Network</a>
+            <a class="active" href="{% url 'management_network' %}">Management Network</a>
         </nav>
     </header>
 
     <main class="page-container">
-        <h1 class="page-title">{{ page_title }}</h1>
+        <h1 class="page-title">Management Network</h1>
 
         <div class="tabs">
-            <a class="tab {% if active_tab == 'routers' %}active{% endif %}" href="{% url 'employee_network' %}?tab=routers">Routers</a>
-            <a class="tab {% if active_tab == 'switches' %}active{% endif %}" href="{% url 'employee_network' %}?tab=switches">Switches</a>
-            <a class="tab {% if active_tab == 'end-devices' %}active{% endif %}" href="{% url 'employee_network' %}?tab=end-devices">End Devices</a>
+            <a class="tab {% if active_tab == 'routers' %}active{% endif %}"
+               href="{% url 'management_network' %}?tab=routers">Routers</a>
+
+            <a class="tab {% if active_tab == 'switches' %}active{% endif %}"
+               href="{% url 'management_network' %}?tab=switches">Switches</a>
+
+            <a class="tab {% if active_tab == 'end-devices' %}active{% endif %}"
+               href="{% url 'management_network' %}?tab=end-devices">End Devices</a>
         </div>
 
         <div class="divider"></div>
 
         <p class="section-count">{{ total_label }}</p>
 
+        {% if devices %}
         <section class="device-grid">
             {% for device in devices %}
             <article class="device-card">
@@ -48,14 +54,14 @@
                     </div>
 
                     <div class="status-dot
-    {% if device.status_color == 'green' %}
-        online
-    {% elif device.status_color == 'yellow' %}
-        warning
-    {% else %}
-        offline
-    {% endif %}
-"></div>
+                        {% if device.status_color == 'green' %}
+                            online
+                        {% elif device.status_color == 'yellow' %}
+                            warning
+                        {% else %}
+                            offline
+                        {% endif %}
+                    "></div>
                 </div>
 
                 <div class="device-details">
@@ -67,21 +73,15 @@
                         <span>IP Address:</span>
                         <strong>{{ device.ip_address }}</strong>
                     </div>
-                    <div class="detail-row">
-                        <span>SSH:</span>
-                        <strong>{{ device.ssh }}</strong>
-                    </div>
-
-                    {% if device.firewall %}
-                    <div class="detail-row">
-                        <span>Firewall:</span>
-                        <strong>{{ device.firewall }}</strong>
-                    </div>
-                    {% endif %}
                 </div>
             </article>
             {% endfor %}
         </section>
+        {% else %}
+            <div class="empty-state">
+                <p>No devices available in this section.</p>
+            </div>
+        {% endif %}
     </main>
 </body>
 </html>
