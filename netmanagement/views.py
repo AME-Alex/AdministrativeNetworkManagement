@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Device
+from .forms import DeviceForm
 
 def home(request):
     return render(request, 'home.html')
@@ -44,4 +45,20 @@ def management_network(request):
         'total_label': total_label,
         'active_tab': active_tab,
         'page_title': 'Management Network',
+    })
+
+def device_detail(request, pk):
+    device = get_object_or_404(Device, pk=pk)
+
+    if request.method == 'POST':
+        form = DeviceForm(request.POST, instance=device)
+        if form.is_valid():
+            form.save()
+            return redirect('device_detail', pk=device.pk)
+    else:
+        form = DeviceForm(instance=device)
+
+    return render(request, 'device_detail.html', {
+        'device': device,
+        'form': form,
     })

@@ -380,3 +380,48 @@ img {
     color: var(--muted);
     font-size: 18px;
 }
+
+.device-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.device-detail-card {
+    max-width: 600px;
+    margin-top: 20px;
+    padding: 30px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #fff;
+}
+
+.form-grid p {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+}
+
+.form-grid input,
+.form-grid select {
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-top: 6px;
+}
+
+.btn-save {
+    margin-top: 20px;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    background: var(--dark);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-save:hover {
+    opacity: 0.9;
+}

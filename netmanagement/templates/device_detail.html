@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ device.name }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <span>Network Management Dashboard</span>
+        </div>
+
+        <nav class="nav">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'employee_network' %}">Employee Network</a>
+            <a href="{% url 'management_network' %}">Management Network</a>
+        </nav>
+    </header>
+
+    <main class="page-container">
+        <h1 class="page-title">{{ device.name }}</h1>
+
+        <div class="device-detail-card">
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-grid">
+                    {{ form.as_p }}
+                </div>
+
+                <button type="submit" class="btn-save">Save Changes</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
