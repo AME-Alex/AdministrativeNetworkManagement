@@ -42,7 +42,7 @@
             <!-- FORM -->
             <form method="POST" class="modal-form">
                 {% csrf_token %}
-
+                <input type="hidden" name="next" value="{{ next_url }}">
                 <!-- DEVICE NAME -->
                 <div>
                     <label>Device Name</label>
@@ -82,7 +82,7 @@
 
                 <!-- BUTTONS -->
                 <div class="modal-actions">
-                    <button type="button" class="btn-cancel" onclick="window.history.back()">Cancel</button>
+                    <button type="button" class="btn-cancel" onclick="window.location.href='{{ next_url }}'"">Cancel</button>
                     <button type="submit" class="btn-save">Save Changes</button>
                 </div>
 

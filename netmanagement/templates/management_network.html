@@ -49,7 +49,7 @@
         <section class="device-grid">
             {% for device in devices %}
             <article class="device-card">
-                <a href="{% url 'device_detail' device.pk %}" class="device-link">
+                <a href="{% url 'device_detail' device.pk %}?next={{ request.get_full_path|urlencode }}" class="device-link">
 
                     <div class="device-header">
                         <div class="device-left">

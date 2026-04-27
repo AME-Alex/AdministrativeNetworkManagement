@@ -6,8 +6,6 @@ class DeviceForm(forms.ModelForm):
         model = Device
         fields = [
             'name',
-            'device_type',
-            'network',
             'ip_address',
             'status',
             'ssh_enabled',

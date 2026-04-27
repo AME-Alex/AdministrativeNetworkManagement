@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Device
 from .forms import DeviceForm
+from django.urls import reverse
 
 def home(request):
     return render(request, 'home.html')
@@ -50,15 +51,23 @@ def management_network(request):
 def device_detail(request, pk):
     device = get_object_or_404(Device, pk=pk)
 
+    next_url = request.POST.get('next') or request.GET.get('next') or reverse('home')
+
     if request.method == 'POST':
         form = DeviceForm(request.POST, instance=device)
+
         if form.is_valid():
             form.save()
-            return redirect('device_detail', pk=device.pk)
+            return redirect(next_url)
+
+        else:
+            print(form.errors)  # keep this while debugging
+
     else:
         form = DeviceForm(instance=device)
 
     return render(request, 'device_detail.html', {
         'device': device,
         'form': form,
+        'next_url': next_url,
     })
